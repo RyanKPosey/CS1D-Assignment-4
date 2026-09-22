@@ -88,39 +88,36 @@ void BinarySearchTree::printTreeByLevel() const
 
     std::queue<const TreeNode *> nodeQueue;
     nodeQueue.push(root_);
-    int level = 0;
+    int levelNumber = 0;
 
     while (!nodeQueue.empty())
     {
-        int levelSize = static_cast<int>(nodeQueue.size());
-        std::vector<const TreeNode *> currentLevel;
+        const std::size_t levelSize = nodeQueue.size();
+        std::cout << "Level " << levelNumber << ": ";
 
-        std::cout << "Level " << level << ": ";
-
-        for (int i = 0; i < levelSize; ++i)
+        for (std::size_t i = 0; i < levelSize; ++i)
         {
-            const TreeNode *current = nodeQueue.front();
+            const TreeNode *currentNode = nodeQueue.front();
             nodeQueue.pop();
-            currentLevel.push_back(current);
-            std::cout << current->value;
 
-            if (i < levelSize - 1)
+            std::cout << currentNode->value;
+            if (i + 1 < levelSize)
             {
-                std::cout << " ";
+                std::cout << ' ';
             }
 
-            if (current->left != nullptr)
+            if (currentNode->left != nullptr)
             {
-                nodeQueue.push(current->left);
+                nodeQueue.push(currentNode->left);
             }
-            if (current->right != nullptr)
+            if (currentNode->right != nullptr)
             {
-                nodeQueue.push(current->right);
+                nodeQueue.push(currentNode->right);
             }
         }
 
         std::cout << '\n';
-        ++level;
+        ++levelNumber;
     }
 }
 
@@ -166,7 +163,8 @@ void BinarySearchTree::insertRecursive(TreeNode *&current, int value)
     }
 }
 
-void BinarySearchTree::inOrderRecursive(const TreeNode *current, std::vector<int> &values) const
+void BinarySearchTree::inOrderRecursive(const TreeNode *current,
+                                        std::vector<int> &values) const
 {
     if (current == nullptr)
     {
@@ -178,7 +176,8 @@ void BinarySearchTree::inOrderRecursive(const TreeNode *current, std::vector<int
     inOrderRecursive(current->right, values);
 }
 
-void BinarySearchTree::preOrderRecursive(const TreeNode *current, std::vector<int> &values) const
+void BinarySearchTree::preOrderRecursive(const TreeNode *current,
+                                         std::vector<int> &values) const
 {
     if (current == nullptr)
     {
@@ -190,7 +189,8 @@ void BinarySearchTree::preOrderRecursive(const TreeNode *current, std::vector<in
     preOrderRecursive(current->right, values);
 }
 
-void BinarySearchTree::postOrderRecursive(const TreeNode *current, std::vector<int> &values) const
+void BinarySearchTree::postOrderRecursive(const TreeNode *current,
+                                          std::vector<int> &values) const
 {
     if (current == nullptr)
     {
